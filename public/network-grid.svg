@@ -1,0 +1,32 @@
+<svg width="600" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.2"/>
+    </pattern>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#grid)" />
+  
+  <!-- Nodes -->
+  <circle cx="100" cy="100" r="3" fill="#3b82f6" filter="url(#glow)" />
+  <circle cx="300" cy="150" r="3" fill="#3b82f6" filter="url(#glow)" />
+  <circle cx="200" cy="250" r="3" fill="#8b5cf6" filter="url(#glow)" />
+  <circle cx="400" cy="200" r="3" fill="#10b981" filter="url(#glow)" />
+  <circle cx="450" cy="350" r="3" fill="#3b82f6" filter="url(#glow)" />
+  <circle cx="150" cy="400" r="3" fill="#8b5cf6" filter="url(#glow)" />
+  <circle cx="250" cy="500" r="3" fill="#10b981" filter="url(#glow)" />
+  <circle cx="500" cy="100" r="3" fill="#8b5cf6" filter="url(#glow)" />
+  
+  <!-- Connections -->
+  <line x1="100" y1="100" x2="200" y2="250" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.4" />
+  <line x1="200" y1="250" x2="400" y2="200" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.4" />
+  <line x1="300" y1="150" x2="400" y2="200" stroke="#10b981" stroke-width="1" stroke-opacity="0.4" />
+  <line x1="200" y1="250" x2="150" y2="400" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.4" />
+  <line x1="400" y1="200" x2="450" y2="350" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.4" />
+  <line x1="450" y1="350" x2="250" y2="500" stroke="#10b981" stroke-width="1" stroke-opacity="0.4" />
+  <line x1="150" y1="400" x2="250" y2="500" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.4" />
+  <line x1="300" y1="150" x2="500" y2="100" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.4" />
+</svg>

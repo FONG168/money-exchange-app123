@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  email          String   @unique
+  password       String
+  firstName      String?
+  lastName       String?
+  balance        Float    @default(0)
+  earnings       Float    @default(0)
+  completedTasks Int      @default(0)
+  totalBalance   Float    @default(0)
+  joinDate       DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  banned         Boolean  @default(false)
+  frozen         Boolean  @default(false)
+  
+  // Relations
+  counters       UserCounter[]
+  transactions   Transaction[]
+}
+
+model UserCounter {
+  id                    Int      @id @default(autoincrement())
+  userId                Int
+  counterId             Int
+  balance               Float    @default(0)
+  totalEarnings         Float    @default(0)
+  completedTasks        Int      @default(0)
+  dailyCompletedOrders  Int      @default(0)
+  cumulativeCompletedTasks Int   @default(0)  // New field for progressive system
+  lastActivityDate      String   @default("")
+  lastOrderResetDate    String   @default("")
+  isActive              Boolean  @default(false)
+  canWithdraw           Boolean  @default(false)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  // Relations
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, counterId])
+}
+
+model Transaction {
+  id          String   @id
+  userId      Int
+  type        String
+  counterId   Int?
+  amount      Float
+  timestamp   String
+  status      String
+  description String
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model CurrencyPair {
+  id     Int    @id @default(autoincrement())
+  from   String
+  to     String
+  name   String
+  order  Int    @default(0)
+}
+
+model CounterLevel {
+  id                Int    @id @default(autoincrement())
+  name              String
+  minDeposit        Float
+  dailyOrders       Int
+  commission        Float
+  description       String
+  exchangeAmountMin Float
+  exchangeAmountMax Float
+}
