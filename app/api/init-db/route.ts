@@ -3,6 +3,27 @@ import { PrismaClient } from '@/app/generated/prisma';
 
 const prisma = new PrismaClient();
 
+// GET: Return status of database initialization
+export async function GET(req: NextRequest) {
+  try {
+    // Test if tables exist by trying to query them
+    const userCount = await prisma.user.count();
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Database is initialized',
+      userCount 
+    });
+  } catch (error) {
+    return NextResponse.json({ 
+      success: false, 
+      error: 'Database not initialized or connection failed',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 });
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     console.log('🔧 Initializing database schema...');
@@ -104,10 +125,4 @@ export async function POST(req: NextRequest) {
   } finally {
     await prisma.$disconnect();
   }
-}
-
-export async function GET() {
-  return NextResponse.json({ 
-    message: 'Database initialization endpoint. Use POST to initialize.' 
-  });
 }
