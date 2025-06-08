@@ -28,8 +28,7 @@ export default function HistoryPage() {
       try {
         setIsLoading(true);
         // Using context's syncWithServer function to ensure we have latest data from API
-        await syncWithServer();
-      } catch (error) {
+        await syncWithServer();      } catch (error) {
         console.error('Error syncing data:', error);
       } finally {
         setIsLoading(false);
