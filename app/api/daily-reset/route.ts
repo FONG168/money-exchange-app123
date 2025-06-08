@@ -159,16 +159,10 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ 
           success: true, 
           message: 'Daily reset scheduler stopped' 
-        });
-        
-      case 'trigger':
+        });      case 'trigger':
         // Manually trigger a reset for testing
         const result = await performDailyReset();
-        return NextResponse.json({ 
-          success: true, 
-          message: 'Manual daily reset triggered',
-          ...result
-        });
+        return NextResponse.json(result);
         
       case 'status':
         const isRunning = dailyResetInterval !== null;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { 
@@ -21,7 +21,7 @@ import MobileNav from '../components/MobileNav';
 import { useRealtimeUpdates } from '../hooks/useRealtimeUpdates';
 import { getUserSession } from '../utils/session';
 
-export default function DepositPage() {
+function DepositPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { state, dispatch, syncWithServer } = useMoneyExchange();
@@ -485,9 +485,15 @@ export default function DepositPage() {
               )}
             </motion.button>          </motion.div>
         )}
-      </div>
-
-      <MobileNav />
+      </div>      <MobileNav />
     </div>
+  );
+}
+
+export default function DepositPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DepositPageContent />
+    </Suspense>
   );
 }

@@ -1,7 +1,7 @@
 // Utility for broadcasting real-time updates to all connected clients
 
-// Import the clients set from the realtime API route
-import { clients } from '../api/realtime/route';
+// Import the clients set from the realtime clients module
+import { clients } from './realtime-clients';
 
 export async function broadcastRealtimeUpdate(type: string, payload: any) {
   const message = JSON.stringify({ type, payload, timestamp: Date.now() });
