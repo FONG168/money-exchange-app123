@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 {
   "buildCommand": "prisma generate && next build"
+=======
+{
+  "buildCommand": "prisma generate && next build"
+>>>>>>> 4532b0b9629813458ffbea639f87ce3092c726cd
 }
