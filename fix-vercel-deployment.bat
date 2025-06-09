@@ -1,34 +1,68 @@
 @echo off
-echo 🚀 Fixing Vercel Deployment Issues...
+echo 🚨 Fixing Vercel Deployment Issues
+echo ====================================
+
+echo 📝 Current status: API routes returning 404 errors
+echo 💡 This means the deployment failed or environment variables are missing
 
 echo.
-echo 📋 Step 1: Checking current deployment status
-vercel ls
+echo 🔧 Step 1: Cleaning build artifacts...
+if exist ".next" rmdir /s /q ".next"
+if exist "node_modules" rmdir /s /q "node_modules"
+
+echo ✅ Cleaned .next and node_modules
 
 echo.
-echo 📋 Step 2: Setting up environment variables
-echo You need to set these environment variables in Vercel Dashboard:
-echo - DATABASE_URL (your PostgreSQL connection string)
-echo - NEXTAUTH_SECRET (a random secret key)
-echo - NEXTAUTH_URL (your deployed app URL)
+echo 📦 Step 2: Reinstalling dependencies...
+npm install
+
+if errorlevel 1 (
+    echo ❌ npm install failed
+    pause
+    exit /b 1
+)
+
+echo ✅ Dependencies installed
 
 echo.
-echo 📋 Step 3: Redeploying with proper configuration
-git add .
-git commit -m "Fix: Update Vercel deployment configuration for API routes"
-git push origin main
+echo 🔧 Step 3: Generating Prisma client...
+npx prisma generate
+
+if errorlevel 1 (
+    echo ❌ Prisma generate failed
+    pause
+    exit /b 1
+)
+
+echo ✅ Prisma client generated
 
 echo.
-echo 📋 Step 4: Trigger Vercel redeploy
-vercel --prod
+echo 🏗️ Step 4: Building project...
+npm run build
+
+if errorlevel 1 (
+    echo ❌ Build failed - check the error messages above
+    echo 💡 Common issues:
+    echo    - Missing environment variables
+    echo    - Prisma client import errors
+    echo    - TypeScript compilation errors
+    pause
+    exit /b 1
+)
+
+echo ✅ Build successful
 
 echo.
-echo ✅ Deployment fix complete!
+echo 🚀 Next steps:
+echo 1. Go to Vercel Dashboard → Project → Settings → Environment Variables
+echo 2. Add: DATABASE_URL=your-postgresql-connection-string
+echo 3. Redeploy: git add . && git commit -m "Fix deployment" && git push
 echo.
-echo 🔗 Next steps:
-echo 1. Go to Vercel Dashboard
-echo 2. Set environment variables
-echo 3. Redeploy from dashboard
-echo 4. Test API routes
+echo 📋 Required environment variables:
+echo    DATABASE_URL=postgresql://...
+echo    NEXTAUTH_SECRET=any-random-string
+echo    NEXTAUTH_URL=https://your-app.vercel.app
+echo.
+echo 🧪 After redeployment, test with: node debug-api-routes.js
 
 pause
