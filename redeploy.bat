@@ -19,6 +19,6 @@ echo 2. Check Vercel dashboard for deployment status
 echo 3. Test your app: run "node debug-api-routes.js"
 echo.
 echo 🔗 Your app will be available at:
-echo https://money-exchange666.vercel.app
+echo https://money-exchange-app123-9.vercel.app
 echo.
 pause

@@ -1,5 +1,5 @@
 // Debug script to test API routes on deployed app
-const BASE_URL = 'https://money-exchange666.vercel.app';
+const BASE_URL = 'https://money-exchange-app123-9.vercel.app';
 
 async function testAPIRoutes() {
   console.log('🔍 Testing API Routes on Deployed App');

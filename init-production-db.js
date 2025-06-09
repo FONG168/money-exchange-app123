@@ -2,7 +2,7 @@
 const https = require('https');
 const http = require('http');
 
-const PRODUCTION_URL = 'https://money-exchange666.vercel.app';
+const PRODUCTION_URL = 'https://money-exchange-app123-9.vercel.app';
 
 function makeRequest(url, options = {}) {
   return new Promise((resolve, reject) => {
